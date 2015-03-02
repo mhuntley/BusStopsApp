@@ -1,17 +1,12 @@
-<html ng-app="busStops">
-  <head>
-    <title>London Bus Stops8</title>
-    
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,800,600,300,700' rel='stylesheet' type='text/css'>
-    <link href='app/css/style.css' rel='stylesheet' type='text/css'>
-  
-    
-  </head>
-<body>
+<html ng-app="BusStopApp">
+<head>
+  <link href='app/css/style.css' rel='stylesheet' type='text/css'>
+</head>
+<body >
+  <div ng-view></div>
 
- 
   <script src="app/dist/angular.js"></script>
+  <script src="app/dist/angular-route.js"></script>
   <script src="app/dist/lodash.js"></script>
   <script src="app/dist/angular-google-maps.js"></script>
   <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places&sensor=false&language=en&v=3.17"></script>
