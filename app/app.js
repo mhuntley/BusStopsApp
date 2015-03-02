@@ -1,4 +1,6 @@
 var BusStopApp = angular.module("BusStopApp", ["uiGmapgoogle-maps", "ngRoute"]);
+var apikey = "97df55d10b30aac5a0ac7ce748c5b717";
+var appid = "08eebd27";
 
 BusStopApp.config(['$routeProvider',
   function($routeProvider) {
@@ -34,11 +36,27 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
   $scope.latitude = $routeParams.latitude;
   $scope.longitude = $routeParams.longitude
 
-  $scope.map = {
-                center: {
-                  latitude: $scope.latitude,
-                  longitude: $scope.longitude
-                },
-                zoom: 15
-              };
+  $scope.map = 
+  {
+    control: {},
+    showTraffic: false,
+    showBicycling: false,
+    showWeather: false,
+    showHeat: false,
+    center: {
+      latitude: $scope.latitude,
+      longitude: $scope.longitude
+    },
+    options: {
+      streetViewControl: false,
+      panControl: false,
+      maxZoom: 18,
+      minZoom: 13
+    },
+    zoom: 16,
+    dragging: false,
+    bounds: {}
+  };
+  
+
 });
