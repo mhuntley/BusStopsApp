@@ -4,3 +4,19 @@
   font-weight: bolder;
   color: blue;
 }
+
+
+.busStopMarker{
+  height: 160px;
+  width: 100px;
+  display: block;
+}
+
+.busStopMarker h4{
+  margin-top: 30px;
+}
+
+.busStopMarker p{
+  padding: 2px 0px 2px 0px;
+  margin: 0;
+}
