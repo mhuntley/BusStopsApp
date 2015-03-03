@@ -77,18 +77,73 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
         $scope.$apply(function () {
           busStopURL = buildAPIUrl(map.getBounds());
           $http.jsonp(busStopURL).success(function(data){
-            console.log("apiCall");
+            console.log("-------- API CALL ----------");
+            console.log("TransportAPI json url: " + busStopURL);
+            console.log("-------- END API CALL ----------");
+            setupGoogleMarkers(data, busStopURL);
           }); 
         });
       }
     } 
   };
+  
+   
+  
+	$scope.markers = [];
+	// add markers into array
+	var addMarker = function (i, longitude, latitude, name, atcocode, bearing, locality, smscode) {
+    //console.log("add marker");
+    
+    //console.log(longitude);
+		var ret = {
+			id: i,
+      options: {
+      	draggable: false,
+      	labelAnchor: '10 39',
+      	labelContent: i,
+      	labelClass: 'labelMarker'
+      },
+      latitude: latitude,
+      longitude: longitude,
+      title: name,
+      atcocode: atcocode,
+      bearing: bearing,
+      locality: locality,
+      smscode: smscode
+    };
+
+    return ret;
+  };
 
   // function to build url
   function buildAPIUrl(bounds){
-    var url = "http://transportapi.com/v3/uk/bus/stops/bbox.json?callback=JSON_CALLBACK&minlon=" + bounds.ma.j + "&minlat=" + bounds.va.k + "&maxlon=" + bounds.ma.k + "&maxlat=" + bounds.va.j + "&api_key=fed809061ed9956f32d719787fcf8d0e&app_id=ad0f4534";
-    console.log("TransportAPI json url: " + url);    
+    var url = "http://transportapi.com/v3/uk/bus/stops/bbox.json?callback=JSON_CALLBACK&minlon=" + bounds.ma.j + "&minlat=" + bounds.va.k + "&maxlon=" + bounds.ma.k + "&maxlat=" + bounds.va.j + "&api_key=fed809061ed9956f32d719787fcf8d0e&app_id=ad0f4534"; 
     
     return url;
   }
+
+	// builds markers on map
+	function setupGoogleMarkers(busStops)
+	{
+  	//console.log(busStops);
+  	//console.log(busStops.stops);
+  	//console.log("Total Bus stops: " + busStops.total);
+  	var pages = busStops.total/25;
+  	//console.log("Pages in api call: " + pages);
+  	
+		var markers = [];
+		var i = 0;
+    
+		for (var key in busStops.stops) {
+      var stop = busStops.stops[key];
+      //console.log(key);
+      //console.log(stop);
+
+			markers.push(addMarker(i, stop.longitude, stop.latitude, stop.name, stop.atcocode, stop.bearing, stop.locality, stop.smscode));
+  		i++;
+		}
+		$scope.markers = markers;
+		console.log($scope.markers);
+	}
+	
 });
