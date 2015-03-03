@@ -7,4 +7,19 @@
  options="map.options"
  pan="true"
  control="map.control"
- ></ui-gmap-google-map>
+ >
+ 
+ <markers models="markers" coords="'self'" icon="'icon'" click="'onClicked'" fit='true'>
+		<windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
+			<div class="busStopMarker">
+				<h4 class="title" ng-non-bindable>{{ title }}</h2>
+				<p class="direction" ng-non-bindable>direction: {{bearing}}</p>
+				<p ng-non-bindable>{{ locality }}</p>
+				<p ng-non-bindable>SMS: {{ smscode }}</p>
+				<p><a ng-non-bindable href="#times/{{atcocode}}/{{title}}">Bus times</a></p>
+			</div>
+		</windows>
+	</markers>
+
+ 
+ </ui-gmap-google-map>

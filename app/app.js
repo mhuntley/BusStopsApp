@@ -15,6 +15,10 @@ BusStopApp.config(['$routeProvider',
       });
 }]);
 
+/**
+ *  searchController
+ */
+ 
 BusStopApp.controller('searchController', function ($scope, $http, $location) {
     $scope.formInfo = {};
     $scope.saveData = function() {
@@ -31,11 +35,23 @@ BusStopApp.controller('searchController', function ($scope, $http, $location) {
       });
   	}
 });
+// end of searchController
 
+
+/**
+ *  busStopController
+ */
+  
 BusStopApp.controller('busStopController', function ($scope, $http, $routeParams) {
-  $scope.latitude = $routeParams.latitude;
-  $scope.longitude = $routeParams.longitude
 
+  var initialMapLoad = 0;
+  var busStopURL = "";
+  
+	$scope.message = 'busStopController';
+
+	$scope.latitude = $routeParams.latitude;
+  $scope.longitude = $routeParams.longitude
+  
   $scope.map = 
   {
     control: {},
@@ -50,13 +66,29 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
     options: {
       streetViewControl: false,
       panControl: false,
-      maxZoom: 18,
-      minZoom: 13
+      maxZoom: 20,
+      minZoom: 16
     },
-    zoom: 16,
+    zoom: 18,
     dragging: false,
-    bounds: {}
+    bounds: {},
+    events: {
+      idle: function (map, eventName, args) {
+        $scope.$apply(function () {
+          busStopURL = buildAPIUrl(map.getBounds());
+          $http.jsonp(busStopURL).success(function(data){
+            console.log("apiCall");
+          }); 
+        });
+      }
+    } 
   };
-  
 
+  // function to build url
+  function buildAPIUrl(bounds){
+    var url = "http://transportapi.com/v3/uk/bus/stops/bbox.json?callback=JSON_CALLBACK&minlon=" + bounds.ma.j + "&minlat=" + bounds.va.k + "&maxlon=" + bounds.ma.k + "&maxlat=" + bounds.va.j + "&api_key=fed809061ed9956f32d719787fcf8d0e&app_id=ad0f4534";
+    console.log("TransportAPI json url: " + url);    
+    
+    return url;
+  }
 });
