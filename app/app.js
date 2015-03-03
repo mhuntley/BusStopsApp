@@ -53,6 +53,7 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
 	$scope.latitude = $routeParams.latitude;
   $scope.longitude = $routeParams.longitude
   
+  // builds map
   $scope.map = 
   {
     control: {},
@@ -74,6 +75,8 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
     dragging: false,
     bounds: {},
     events: {
+      // creates event so that when the map is idle it calls the 
+      // api to see if any bus stops are new in the map frame
       idle: function (map, eventName, args) {
         $scope.$apply(function () {
           busStopURL = buildAPIUrl(map.getBounds());
@@ -89,9 +92,12 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
   };
   
 	$scope.markers = [];
-	// add markers into array
+	
+	 /**
+    *  add markers into array
+    */  
 	var addMarker = function (i, longitude, latitude, name, atcocode, bearing, locality, smscode) {
-
+    // setups the marker variables
 		var ret = {
 			id: i,
       options: {
@@ -112,28 +118,38 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
     return ret;
   };
 
-  // function to build url
+  /**
+   *  function to build url
+   */ 
   function buildAPIUrl(bounds){
     var url = "http://transportapi.com/v3/uk/bus/stops/bbox.json?callback=JSON_CALLBACK&minlon=" + bounds.ma.j + "&minlat=" + bounds.va.k + "&maxlon=" + bounds.ma.k + "&maxlat=" + bounds.va.j + "&api_key=fed809061ed9956f32d719787fcf8d0e&app_id=ad0f4534"; 
     
     return url;
   }
 
-	// builds markers on map
+	/**
+  *   builds markers on map
+  */
 	function setupGoogleMarkers(busStops, url, markers )
 	{
   	var pages = busStops.total/25;
     
+    // loops through bus stops
 		for (var key in busStops.stops) {
       var stop = busStops.stops[key];
       var addToArray=true;
       
+      // checks to see if the bus stop is already in the markers array.
+      // if it is then change variable addToArray to false so that the
+      // push event is not run
       for(var i=0; i < markers.length; i++){
         if(markers[i].atcocode === stop.atcocode){
           addToArray=false;
           console.log("no");
         }
       }
+      
+      // push new marker
       if(addToArray){
         markers.push(addMarker(stop.atcocode, stop.longitude, stop.latitude, stop.name, stop.atcocode, stop.bearing, stop.locality, stop.smscode));
       }
@@ -141,3 +157,4 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
 		$scope.markers = markers;
 	}
 });
+// end of searchController
