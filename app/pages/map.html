@@ -1,6 +1,13 @@
 <ui-gmap-google-map center="map.center" zoom="map.zoom" dragging="map.dragging" bounds="map.bounds" events="map.events" options="map.options" pan="true" control="map.control" >
- 
-  <ui-gmap-markers models="markers" coords="'self'" icon="'icon'" click="'onClicked'" fit='false'>
-
-	</markers>
- </ui-gmap-google-map>
+  <ui-gmap-markers models="markers" coords="'self'" icon="'icon'" click="onMarkerClicked" options="'options'" events="markersEvent">
+    <ui-gmap-windows show="'showWindow'" closeClick="'closeClick'" ng-cloak>
+       <div class="busStopMarker">
+				<h4 class="title" ng-non-bindable>{{ title }}</h2>
+				<p class="direction" ng-non-bindable>direction: {{bearing}}</p>
+				<p ng-non-bindable>{{ locality }}</p>
+				<p ng-non-bindable>SMS: {{ smscode }}</p>
+				<p><a ng-non-bindable href="#times/{{atcocode}}/{{title}}">Bus times</a></p>
+			</div>
+    </ui-gmap-windows>
+  </ui-gmap-markers>
+</ui-gmap-google-map>

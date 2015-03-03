@@ -1,0 +1,11 @@
+<a href="">Back to map</a>
+<h2>{{streetName}}</h2>
+<div ng-repeat="(key, bus) in buses">
+  <h4>Bus {{key}}</h4>
+	<ul>
+	  <li ng-repeat="bustime in bus">
+		  <p class="title">Direction {{bustime.direction}}</p>
+		  <p class="exp-time">expected time: {{bustime.expected_departure_time}}</p>
+	  </li>
+	</ul>
+</div>

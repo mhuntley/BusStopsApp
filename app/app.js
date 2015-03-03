@@ -12,6 +12,10 @@ BusStopApp.config(['$routeProvider',
       when('/map/:latitude/:longitude', {
       templateUrl: '/app/pages/map.html',
         controller: 'busStopController'
+      }).
+      when('/times/:atcocode/:street', {
+        templateUrl: '/app/pages/bustimes.html',
+        controller: 'busTimeController'
       });
 }]);
 
@@ -84,7 +88,7 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
             console.log("-------- API CALL ----------");
             console.log("TransportAPI json url: " + busStopURL);
             console.log("-------- END API CALL ----------");
-            setupGoogleMarkers(data, busStopURL, markers);
+            setupGoogleMarkers(data, busStopURL, markers);            
           }); 
         });
       }
@@ -102,8 +106,8 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
 			id: i,
       options: {
       	draggable: false,
-      	labelAnchor: '10 39',
-      	labelContent: i,
+      	labelAnchor: '-7 10',
+      	labelContent: name,
       	labelClass: 'labelMarker'
       },
       latitude: latitude,
@@ -158,3 +162,20 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
 	}
 });
 // end of searchController
+
+
+/**
+ *  busStopController
+ */
+BusStopApp.controller('busTimeController', function ($scope, $http, $routeParams) {
+
+  // creates url to get the bus stop data
+	var busTimeURL = "http://transportapi.com/v3/uk/bus/stop/" + $routeParams.atcocode + "/live.json?callback=JSON_CALLBACK&&group=route&api_key=" + apikey + "&app_id=" + appid + "";
+
+  $http.jsonp(busTimeURL).success(function(timeData){
+    $scope.buses = timeData.departures;
+    console.log(timeData.departures);
+  });
+	$scope.streetName = $routeParams.street;
+});
+// end of busStopController

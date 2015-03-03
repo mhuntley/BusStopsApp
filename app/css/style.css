@@ -1,1 +1,6 @@
 .angular-google-map-container { height: 400px; }
+
+.labelMarker{
+  font-weight: bolder;
+  color: blue;
+}
