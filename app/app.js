@@ -46,6 +46,7 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
 
   var initialMapLoad = 0;
   var busStopURL = "";
+  var markers = [];
   
 	$scope.message = 'busStopController';
 
@@ -80,21 +81,17 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
             console.log("-------- API CALL ----------");
             console.log("TransportAPI json url: " + busStopURL);
             console.log("-------- END API CALL ----------");
-            setupGoogleMarkers(data, busStopURL);
+            setupGoogleMarkers(data, busStopURL, markers);
           }); 
         });
       }
     } 
   };
   
-   
-  
 	$scope.markers = [];
 	// add markers into array
 	var addMarker = function (i, longitude, latitude, name, atcocode, bearing, locality, smscode) {
-    //console.log("add marker");
-    
-    //console.log(longitude);
+
 		var ret = {
 			id: i,
       options: {
@@ -111,7 +108,7 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
       locality: locality,
       smscode: smscode
     };
-
+    console.log(ret);
     return ret;
   };
 
@@ -123,27 +120,24 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
   }
 
 	// builds markers on map
-	function setupGoogleMarkers(busStops)
+	function setupGoogleMarkers(busStops, url, markers )
 	{
-  	//console.log(busStops);
-  	//console.log(busStops.stops);
-  	//console.log("Total Bus stops: " + busStops.total);
   	var pages = busStops.total/25;
-  	//console.log("Pages in api call: " + pages);
-  	
-		var markers = [];
-		var i = 0;
     
 		for (var key in busStops.stops) {
       var stop = busStops.stops[key];
-      //console.log(key);
-      //console.log(stop);
-
-			markers.push(addMarker(i, stop.longitude, stop.latitude, stop.name, stop.atcocode, stop.bearing, stop.locality, stop.smscode));
-  		i++;
+      var addToArray=true;
+      
+      for(var i=0; i < markers.length; i++){
+        if(markers[i].atcocode === stop.atcocode){
+          addToArray=false;
+          console.log("no");
+        }
+      }
+      if(addToArray){
+        markers.push(addMarker(stop.atcocode, stop.longitude, stop.latitude, stop.name, stop.atcocode, stop.bearing, stop.locality, stop.smscode));
+      }
 		}
 		$scope.markers = markers;
-		console.log($scope.markers);
 	}
-	
 });
