@@ -1,29 +1,29 @@
-var BusStopApp = angular.module("BusStopApp", ["uiGmapgoogle-maps", "ngRoute"]);
+var busStopApp = angular.module("busStopApp", ["uiGmapgoogle-maps", "ngRoute"]);
 var apikey = "97df55d10b30aac5a0ac7ce748c5b717";
 var appid = "08eebd27";
 
-BusStopApp.config(['$routeProvider',
+busStopApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
       templateUrl: '/app/pages/search.html',
-        controller: 'searchController'
+        controller: 'SearchController'
       }).
       when('/map/:latitude/:longitude', {
       templateUrl: '/app/pages/map.html',
-        controller: 'busStopController'
+        controller: 'BusStopController'
       }).
-      when('/times/:atcocode/:street', {
+      when('/times/:atcocode', {
         templateUrl: '/app/pages/bustimes.html',
-        controller: 'busTimeController'
+        controller: 'BusTimeController'
       });
 }]);
 
 /**
- *  searchController
+ *  SearchController
  */
- 
-BusStopApp.controller('searchController', function ($scope, $http, $location) {
+
+busStopApp.controller('SearchController', function ($scope, $http, $location) {
     $scope.formInfo = {};
     $scope.saveData = function() {
     	getLatLong($scope.formInfo.Name);
@@ -39,26 +39,26 @@ BusStopApp.controller('searchController', function ($scope, $http, $location) {
       });
   	}
 });
-// end of searchController
+// end of SearchController
 
 
 /**
- *  busStopController
+ *  BusStopController
  */
-  
-BusStopApp.controller('busStopController', function ($scope, $http, $routeParams) {
+
+busStopApp.controller('BusStopController', function ($scope, $http, $routeParams) {
 
   var initialMapLoad = 0;
   var busStopURL = "";
   var markers = [];
-  
-	$scope.message = 'busStopController';
+
+	$scope.message = 'BusStopController';
 
 	$scope.latitude = $routeParams.latitude;
   $scope.longitude = $routeParams.longitude
-  
+
   // builds map
-  $scope.map = 
+  $scope.map =
   {
     control: {},
     showTraffic: false,
@@ -79,27 +79,24 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
     dragging: false,
     bounds: {},
     events: {
-      // creates event so that when the map is idle it calls the 
+      // creates event so that when the map is idle it calls the
       // api to see if any bus stops are new in the map frame
       idle: function (map, eventName, args) {
         $scope.$apply(function () {
           busStopURL = buildAPIUrl(map.getBounds());
           $http.jsonp(busStopURL).success(function(data){
-            console.log("-------- API CALL ----------");
-            console.log("TransportAPI json url: " + busStopURL);
-            console.log("-------- END API CALL ----------");
-            setupGoogleMarkers(data, busStopURL, markers);            
-          }); 
+            setupGoogleMarkers(data, busStopURL, markers);
+          });
         });
       }
-    } 
+    }
   };
-  
+
 	$scope.markers = [];
-	
+
 	 /**
     *  add markers into array
-    */  
+    */
 	var addMarker = function (i, longitude, latitude, name, atcocode, bearing, locality, smscode) {
     // setups the marker variables
 		var ret = {
@@ -118,16 +115,16 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
       locality: locality,
       smscode: smscode
     };
-    console.log(ret);
+
     return ret;
   };
 
   /**
    *  function to build url
-   */ 
+   */
   function buildAPIUrl(bounds){
-    var url = "http://transportapi.com/v3/uk/bus/stops/bbox.json?callback=JSON_CALLBACK&minlon=" + bounds.ma.j + "&minlat=" + bounds.va.k + "&maxlon=" + bounds.ma.k + "&maxlat=" + bounds.va.j + "&api_key=fed809061ed9956f32d719787fcf8d0e&app_id=ad0f4534"; 
-    
+    var url = "http://transportapi.com/v3/uk/bus/stops/bbox.json?callback=JSON_CALLBACK&minlon=" + bounds.ma.j + "&minlat=" + bounds.va.k + "&maxlon=" + bounds.ma.k + "&maxlat=" + bounds.va.j + "&api_key=fed809061ed9956f32d719787fcf8d0e&app_id=ad0f4534";
+
     return url;
   }
 
@@ -137,12 +134,12 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
 	function setupGoogleMarkers(busStops, url, markers )
 	{
   	var pages = busStops.total/25;
-    
+
     // loops through bus stops
 		for (var key in busStops.stops) {
       var stop = busStops.stops[key];
       var addToArray=true;
-      
+
       // checks to see if the bus stop is already in the markers array.
       // if it is then change variable addToArray to false so that the
       // push event is not run
@@ -152,7 +149,7 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
           console.log("no");
         }
       }
-      
+
       // push new marker
       if(addToArray){
         markers.push(addMarker(stop.atcocode, stop.longitude, stop.latitude, stop.name, stop.atcocode, stop.bearing, stop.locality, stop.smscode));
@@ -161,21 +158,20 @@ BusStopApp.controller('busStopController', function ($scope, $http, $routeParams
 		$scope.markers = markers;
 	}
 });
-// end of searchController
+// end of SearchController
 
 
 /**
- *  busStopController
+ *  BusStopController
  */
-BusStopApp.controller('busTimeController', function ($scope, $http, $routeParams) {
+busStopApp.controller('BusTimeController', function ($scope, $http, $routeParams) {
 
   // creates url to get the bus stop data
 	var busTimeURL = "http://transportapi.com/v3/uk/bus/stop/" + $routeParams.atcocode + "/live.json?callback=JSON_CALLBACK&&group=route&api_key=" + apikey + "&app_id=" + appid + "";
 
   $http.jsonp(busTimeURL).success(function(timeData){
     $scope.buses = timeData.departures;
-    console.log(timeData.departures);
   });
 	$scope.streetName = $routeParams.street;
 });
-// end of busStopController
+// end of BusStopController
