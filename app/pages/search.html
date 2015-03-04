@@ -1,7 +1,10 @@
-<form role="search" ng-controller="SearchController">
+<h1>London Bus stop guide</h1>
+
+<form name="search" role="search" ng-controller="SearchController" ng-submit="SearchController.submit()">
 	<div class="form-group">
-			<label for="inputName3" class="col-sm-2 control-label">Location</label>
-				<input class="form-control" id="inputName3" placeholder="Location" ng-model="formInfo.Name">
-				<button type="submit" ng-click="saveData()" class="btn btn-success">Search</button>
-		</div>
+		<label for="inputName3" class="col-sm-2 control-label">Location</label>
+		<input placeholder="Location" ng-model="formInfo.Name" required ng-minlength="4">
+		<input ng-disabled="search.$invalid" type="submit" ng-click="saveData()" value="Search">
+  </div>
 </form>
+<p><i>Must be at least 4 characters long</i></p>
