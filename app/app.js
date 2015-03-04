@@ -24,20 +24,21 @@ busStopApp.config(['$routeProvider',
  */
 
 busStopApp.controller('SearchController', function ($scope, $http, $location) {
-    $scope.formInfo = {};
-    $scope.saveData = function() {
-    	getLatLong($scope.formInfo.Name);
-    };
+  
+  $scope.formInfo = {};
+  $scope.saveData = function() {
+  	getLatLong($scope.formInfo.Name);
+  };
 
-    function getLatLong(address){
-    	//build url for google maps to get long lat and change app path
-    	var googleMapsURL = "http://maps.googleapis.com/maps/api/geocode/json?callback=JSON_CALLBACK&address=" + address + ",london";
-      $http.get(googleMapsURL)
-      	.success(function(geoData){
-      		var newURL = 'map/' + geoData.results[0].geometry.location.lat + "/" + geoData.results[0].geometry.location.lng;
-          $location.path(newURL);
-      });
-  	}
+  function getLatLong(address){
+  	//build url for google maps to get long lat and change app path
+  	var googleMapsURL = "http://maps.googleapis.com/maps/api/geocode/json?callback=JSON_CALLBACK&address=" + address + ",london";
+    $http.get(googleMapsURL)
+    	.success(function(geoData){
+    		var newURL = 'map/' + geoData.results[0].geometry.location.lat + "/" + geoData.results[0].geometry.location.lng;
+        $location.path(newURL);
+    });
+	}
 });
 // end of SearchController
 
