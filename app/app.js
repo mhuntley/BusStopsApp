@@ -6,15 +6,15 @@ busStopApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-      templateUrl: '/app/pages/search.html',
+      templateUrl: 'app/pages/search.html',
         controller: 'SearchController'
       }).
       when('/map/:latitude/:longitude/:address', {
-      templateUrl: '/app/pages/map.html',
+      templateUrl: 'app/pages/map.html',
         controller: 'BusStopController'
       }).
       when('/times/:atcocode', {
-        templateUrl: '/app/pages/bustimes.html',
+        templateUrl: 'app/pages/bustimes.html',
         controller: 'BusTimeController'
       });
 }]);
