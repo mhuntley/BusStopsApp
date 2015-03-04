@@ -49,7 +49,6 @@ busStopApp.controller('SearchController', function ($scope, $http, $location) {
 
 busStopApp.controller('BusStopController', function ($scope, $http, $routeParams, $location) {
 
-  var initialMapLoad = 0;
   var busStopURL = "";
   var markers = [];
 
@@ -62,10 +61,6 @@ busStopApp.controller('BusStopController', function ($scope, $http, $routeParams
   $scope.returnHome = function() {
   	$location.path('/');
   };
-  $scope.back = function() {
-  	$window.history.back();
-  };
-  
   
   // builds map
   $scope.map =
@@ -91,7 +86,7 @@ busStopApp.controller('BusStopController', function ($scope, $http, $routeParams
     events: {
       // creates event so that when the map is idle it calls the
       // api to see if any bus stops are new in the map frame
-      idle: function (map, eventName, args) {
+      idle: function (map) {
         $scope.$apply(function () {
           busStopURL = buildAPIUrl(map.getBounds());
           $http.jsonp(busStopURL).success(function(data){
@@ -143,8 +138,6 @@ busStopApp.controller('BusStopController', function ($scope, $http, $routeParams
   */
 	function setupGoogleMarkers(busStops, url, markers )
 	{
-  	var pages = busStops.total/25;
-
     // loops through bus stops
 		for (var key in busStops.stops) {
       var stop = busStops.stops[key];
