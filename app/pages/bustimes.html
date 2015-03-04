@@ -1,11 +1,16 @@
+<h1 class="pt20">London Bus Stop Guide</h1>
+
+<a href="" ng-click="back()">Return To Map</a>
+<a href="" ng-click="returnHome()" class="pl40">New Search</a>
+
 <div class="container">
   <div ng-repeat="(key, bus) in buses">
   	<div ng-repeat-start="bustime in bus" ng-if="$first" big>
      <h4>Bus {{key}} - {{bustime.direction}}</h4>
-  		<p class="exp-time"><i>expected time:</i> {{bustime.expected_departure_time}}</p>
+  		<p class="exp-time">expected time: {{bustime.expected_departure_time}}</p>
     </div>
     <div ng-repeat-end ng-if="!$first">
-  		<p class="exp-time"><i>expected time:</i> {{bustime.expected_departure_time}}</p>
+  		<p class="exp-time">expected time: {{bustime.expected_departure_time}}</p>
     </div>
   </div>
 </div>

@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'lane_-_narrowregular';
+    src: url('LANENAR_-webfont.eot');
+    src: url('LANENAR_-webfont.eot?#iefix') format('embedded-opentype'),
+         url('LANENAR_-webfont.woff') format('woff'),
+         url('LANENAR_-webfont.ttf') format('truetype'),
+         url('LANENAR_-webfont.svg#lane_-_narrowregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body{
+  font-family: 'lane_-_narrowregular';
+  background: #eee;
+}
+
+h4{
+  margin-bottom: 2px;
+}
+a{
+  color: #000;
+}
+p{
+  &.small{
+    font-size: 11px;
+  }
+  &.subtitle{
+    padding: 5px 0 17px 0px;
+    margin: 0;
+  }
+  &.exp-time{
+    margin: 0 0 2px 0;
+  }
+}
+
+.pt20{  padding-top: 20px; }
+.pt150{  padding-top: 150px;}
+.mb0{  margin-bottom: 0;}
+.pl40{  padding-left: 40px;}
+
+#container{
+  width: 500px;
+  text-align: center;
+  margin: auto;
+  background: #fff;
+  min-height: 500px;
+  padding-bottom: 30px;
+  box-sizing: border-box;
+}
+
+.angular-google-map-container { 
+  height: 400px; 
+}
+
+.labelMarker{
+  font-weight: bolder;
+  color: blue;
+}
+
+.busStopMarker{
+  height: 160px;
+  width: 100px;
+  display: block;
+  h4{
+    margin-top: 30px;
+  }
+  p{
+    padding: 2px 0px 2px 0px;
+    margin: 0;
+  }
+}
+
+/**
+ * forms
+ */
+ 
+input{
+  font-family: 'lane_-_narrowregular';
+}
