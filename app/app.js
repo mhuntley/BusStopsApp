@@ -42,7 +42,6 @@ busStopApp.controller('SearchController', function ($scope, $http, $location) {
 });
 // end of SearchController
 
-
 /**
  *  BusStopController
  */
@@ -58,6 +57,7 @@ busStopApp.controller('BusStopController', function ($scope, $http, $routeParams
   $scope.longitude = $routeParams.longitude;
   $scope.address = $routeParams.address;
 
+  // builds button functions
   $scope.returnHome = function() {
   	$location.path('/');
   };
@@ -162,12 +162,11 @@ busStopApp.controller('BusStopController', function ($scope, $http, $routeParams
 });
 // end of SearchController
 
-
 /**
  *  BusStopController
  */
 busStopApp.controller('BusTimeController', function ($scope, $http, $routeParams, $location, $window) {
-  
+  // builds button functions
   $scope.returnHome = function() {
   	$location.path('/');
   };
