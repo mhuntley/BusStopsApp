@@ -128,7 +128,9 @@ busStopApp.controller('BusStopController', function ($scope, $http, $routeParams
    *  function to build url
    */
   function buildAPIUrl(bounds){
-    var url = "http://transportapi.com/v3/uk/bus/stops/bbox.json?callback=JSON_CALLBACK&minlon=" + bounds.ma.j + "&minlat=" + bounds.va.k + "&maxlon=" + bounds.ma.k + "&maxlat=" + bounds.va.j + "&api_key=fed809061ed9956f32d719787fcf8d0e&app_id=ad0f4534";
+    var southWest = bounds.getSouthWest();
+    var northEast = bounds.getNorthEast();
+    var url = "http://transportapi.com/v3/uk/bus/stops/bbox.json?callback=JSON_CALLBACK&minlon=" + southWest.B + "&minlat=" + southWest.k + "&maxlon=" + northEast.B + "&maxlat=" + northEast.k + "&api_key=fed809061ed9956f32d719787fcf8d0e&app_id=ad0f4534";
 
     return url;
   }
