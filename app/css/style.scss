@@ -12,7 +12,7 @@
 
 body{
   font-family: 'lane_-_narrowregular';
-  background: #eee;
+  background: #d0ecfd;
 }
 
 h4{
@@ -78,3 +78,15 @@ p{
 input{
   font-family: 'lane_-_narrowregular';
 }
+
+
+a[title="Report errors in the road map or imagery to Google"],
+a[href^="http://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+}
+

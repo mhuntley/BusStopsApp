@@ -3,8 +3,8 @@
 <form name="search" role="search" ng-controller="SearchController" ng-submit="SearchController.submit()">
 	<div class="form-group">
 		<label for="inputName3" class="col-sm-2 control-label">Location</label>
-		<input placeholder="Location" ng-model="formInfo.Name" required ng-minlength="4">
+		<input name="location" placeholder="Location" ng-model="formInfo.Name" required ng-minlength="4">
 		<input ng-disabled="search.$invalid" type="submit" ng-click="saveData()" value="Search">
   </div>
+  <p class="small" ng-show="search.location.$invalid">Must be at least 4 characters long</p>
 </form>
-<p class="small">Must be at least 4 characters long</p>
