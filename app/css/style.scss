@@ -13,6 +13,7 @@
 body{
   font-family: 'lane_-_narrowregular';
   background: #d0ecfd;
+  letter-spacing: 1px;
 }
 
 h4{
@@ -35,7 +36,7 @@ p{
 }
 
 .pt20{  padding-top: 20px; }
-.pt150{  padding-top: 150px;}
+.pt50{  padding-top: 50px;}
 .mb0{  margin-bottom: 0;}
 .pl40{  padding-left: 40px;}
 
@@ -62,6 +63,7 @@ p{
   height: 160px;
   width: 100px;
   display: block;
+  letter-spacing: normal;
   h4{
     margin-top: 30px;
   }
@@ -74,12 +76,23 @@ p{
 /**
  * forms
  */
- 
+
+#search{
+  min-height: 50px;
+} 
 input{
   font-family: 'lane_-_narrowregular';
 }
 
 
+
+#homeImage{
+  width: 300px;
+}
+
+/**
+ * google maps
+ */
 a[title="Report errors in the road map or imagery to Google"],
 a[href^="http://maps.google.com/maps"]{display:none !important}
 
@@ -89,4 +102,7 @@ a[href^="http://maps.google.com/maps"]{display:none !important}
 .gmnoprint div {
     background:none !important;
 }
+
+
+
 

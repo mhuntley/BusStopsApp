@@ -77,10 +77,13 @@ busStopApp.controller('BusStopController', function ($scope, $http, $routeParams
     options: {
       streetViewControl: false,
       panControl: false,
+      mapTypeControl: false,
+      zoomControl: true,
       maxZoom: 20,
       minZoom: 16,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true
+      zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.LARGE,
+    },
     },
     zoom: 17,
     dragging: false,
