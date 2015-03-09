@@ -48,6 +48,9 @@ p{
   min-height: 500px;
   padding-bottom: 30px;
   box-sizing: border-box;
+  @media screen and (max-width: 479px){
+    width: 100%;
+  }
 }
 
 .angular-google-map-container { 
